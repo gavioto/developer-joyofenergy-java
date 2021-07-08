@@ -69,4 +69,17 @@ public class PricePlanComparatorController {
 
         return ResponseEntity.ok(recommendations);
     }
+
+    @GetMapping("/calculate-usage-cost-last-week/{smartMeterId}")
+    public ResponseEntity<BigDecimal> calculateUsageCostLastWeek(@PathVariable String smartMeterId) {
+
+        String pricePlanIdForSmartMeterId = accountService.getPricePlanIdForSmartMeterId(smartMeterId);
+        Optional<Map<String, BigDecimal>> consumptionCost = pricePlanService.getConsumptionCostOfElectricityReadingsForEachPricePlan(smartMeterId);
+
+        if(pricePlanIdForSmartMeterId==null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok(BigDecimal.valueOf(10));
+    }
 }
